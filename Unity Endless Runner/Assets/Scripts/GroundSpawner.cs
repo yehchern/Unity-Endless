@@ -6,10 +6,10 @@ public class GroundSpawner : MonoBehaviour
     Vector3 nextSpawnPoint;
 
     public void SpawnTile(bool spawnItems){
-        GameObject temp = Instantiate(groundTile, nextSpawnPoint, Quaternion.identity);
-        nextSpawnPoint = temp.transform.GetChild(1).transform.position;
+        GameObject temp = Instantiate(groundTile, nextSpawnPoint, Quaternion.identity);//重生點
+        nextSpawnPoint = temp.transform.GetChild(1).transform.position;//GetChild(1): NextSpawnPoint(GameObject GroundTile的子物件)
 
-        if(spawnItems) {
+        if (spawnItems) {
             temp.GetComponent<GroundTile>().SpawnObstacle();
             //temp.GetComponent<GroundTile>().SpawnCoins();
         }
