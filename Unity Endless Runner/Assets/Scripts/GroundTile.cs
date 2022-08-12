@@ -11,8 +11,8 @@ public class GroundTile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();
-       
+        groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();//連結GroundSpawner.CS這個檔案
+
     }
 
     private void OnTriggerExit (Collider other){

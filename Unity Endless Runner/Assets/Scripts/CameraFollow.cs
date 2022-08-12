@@ -14,7 +14,7 @@ public class CameraFollow : MonoBehaviour
     void Update()
     {
        Vector3 targetPos = player.position + offset; 
-       targetPos.x = 0;
+       targetPos.x = 0;//x軸控制左右，若x=0，則相機永遠在中間
        transform.position = targetPos;
     }
 }
