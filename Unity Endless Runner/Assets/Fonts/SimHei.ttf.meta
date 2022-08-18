@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 2e7538cf7e00fd041a565c7eeab83205
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - SimHei
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 9b12baa2dacfa064c8b63eb06606f602, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

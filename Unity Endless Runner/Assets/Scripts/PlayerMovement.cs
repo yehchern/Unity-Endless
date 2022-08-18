@@ -1,33 +1,53 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour
 {
     bool alive = true;
+    public GameObject uiObject;
+    public GameObject uiObject2;
     public float speed = 5;
-    [SerializeField] Rigidbody rb;//¿ûÅé¡AÀ°§U¨ü¤O
+    [SerializeField] Rigidbody rb;//ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½O
 
     float horizontalInput;
-    [SerializeField] float horizontalMultiplier = 2;//À°§U¥[³t¤ô¥­²¾°Ê
+    [SerializeField] float horizontalMultiplier = 2;//ï¿½ï¿½ï¿½Uï¿½[ï¿½tï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     public float speedIncreasePerPoint = 0.1f;
     [SerializeField] float jumpForce = 400f;
     [SerializeField] LayerMask groundMask;
-    private void FixedUpdate(){//¹j¤@¬q®É¶¡°õ¦æ¤@¦¸
+
+    void Start()
+    {
+        uiObject.SetActive(false);
+        uiObject2.SetActive(false);
+    }
+    private void FixedUpdate(){//ï¿½jï¿½@ï¿½qï¿½É¶ï¿½ï¿½ï¿½ï¿½ï¿½@ï¿½ï¿½
         if(!alive) return;
-        Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime; //²¾°Ê¶ZÂ÷¡B¤è¦V       transform.forward: ­±¦V¤è¦V¡B
-        Vector3 horizontalMove = transform.right * horizontalInput*speed*Time.fixedDeltaTime*horizontalMultiplier;// ¤ô¥­²¾°Ê
+        Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime; //ï¿½ï¿½ï¿½Ê¶Zï¿½ï¿½ï¿½Bï¿½ï¿½V       transform.forward: ï¿½ï¿½ï¿½Vï¿½ï¿½Vï¿½B
+        Vector3 horizontalMove = transform.right * horizontalInput*speed*Time.fixedDeltaTime*horizontalMultiplier;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         rb.MovePosition(rb.position + forwardMove+ horizontalMove);
     }
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal"); //Áä½L±±¨î
+        horizontalInput = Input.GetAxis("Horizontal"); //ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.Space)){
             Jump();
         }
         if(transform.position.y < -5){
             Die();
+        }
+        if (Input.GetKeyDown(KeyCode.A)){
+        
+            StartCoroutine("WaitForSec");
+            
+        }
+        if (Input.GetKeyDown(KeyCode.D)){
+            
+            StartCoroutine("WaitForSec2");
+            
         }
     }
     public void Die(){
@@ -47,4 +67,25 @@ public class PlayerMovement : MonoBehaviour
         //if we are, jump
         rb.AddForce(Vector3.up * jumpForce);
     }
+
+    IEnumerator WaitForSec()
+    {
+        yield return new WaitForSeconds(1);
+        uiObject.SetActive(true);
+        yield return new WaitForSeconds(1);
+        uiObject.SetActive(false);
+    }
+
+    IEnumerator WaitForSec2()
+    {
+        yield return new WaitForSeconds(1);
+        uiObject2.SetActive(true);
+        yield return new WaitForSeconds(1);
+        uiObject2.SetActive(false);
+    }
+
+    
+
+
+
 }
