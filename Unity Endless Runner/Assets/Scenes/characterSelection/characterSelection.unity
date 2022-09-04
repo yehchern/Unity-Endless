@@ -201,7 +201,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 210573075}
   m_LocalRotation: {x: 0.032920413, y: -0, z: -0, w: 0.999458}
-  m_LocalPosition: {x: -0.13, y: 0.49, z: 0}
+  m_LocalPosition: {x: -0.13000488, y: 0.4900055, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -260,7 +260,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.8, y: -63.2}
+  m_AnchoredPosition: {x: -0.000012159, y: -93.5}
   m_SizeDelta: {x: 25.6555, y: 24.852}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &252820815
@@ -306,7 +306,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 252820816}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 210573078}
+        m_TargetAssemblyTypeName: CharacterManager, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &252820816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -927,7 +939,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.8, y: -38.3}
+  m_AnchoredPosition: {x: 1.4, y: -67.6}
   m_SizeDelta: {x: 85.1858, y: 14.7903}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1706277561
