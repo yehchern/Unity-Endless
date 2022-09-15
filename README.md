@@ -16,3 +16,6 @@ https://www.youtube.com/watch?v=gO9VVKIPzuE
 
 ### Change character
 https://www.youtube.com/watch?v=2PKBChN10us
+
+### Read Arduino Data
+https://answers.unity.com/questions/1255905/arduino-accelerometer-data-reading-problem.html
