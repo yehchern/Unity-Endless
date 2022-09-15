@@ -23,7 +23,7 @@ public class RegisterUser : MonoBehaviour
     RoleRegisterInput.text = registerrole_inputField.text;
 
     RegisterButton2.onClick.AddListener(() =>{
-        StartCoroutine(Main.Instance.Web.RegisterUser(registername_inputField.text, registerpass_inputField.text, registerrole_inputField.text));
+        StartCoroutine(Main.Instance.Web.RegisterUser1(registername_inputField.text, registerpass_inputField.text, registerrole_inputField.text));
         });  
     
     }

@@ -2,9 +2,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+//using System.IO.Ports;
+//using System.Threading;
+//using System;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //SerialPort sp = new SerialPort("COM5", 115200);
     bool alive = true;
     public GameObject uiObject;
     public GameObject uiObject2;
@@ -22,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
     {
         uiObject.SetActive(false);
         uiObject2.SetActive(false);
+        //sp.Open();
+        //sp.ReadTimeout = 1;
+        
     }
     private void FixedUpdate(){//�j�@�q�ɶ�����@��
         if(!alive) return;
@@ -33,6 +40,18 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal"); //��L����
+        //if (sp.IsOpen){
+           // try{
+                //if (sp.ReadByte()>= 10){
+                    //transform.Translate(Vector3.left * Time.deltaTime*5);
+                //}
+                // if (sp.ReadByte()<= -10){
+                    //transform.Translate(Vector3.right * Time.deltaTime*5);
+               // }
+           // } catch (System.Exception){
+
+           // }
+       // }
         if (Input.GetKeyDown(KeyCode.Space)){
             Jump();
         }

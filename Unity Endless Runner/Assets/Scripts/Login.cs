@@ -20,7 +20,7 @@ public class Login : MonoBehaviour
         PasswordInput.text = pass_inputField.text;
 
         LoginButton.onClick.AddListener(() =>{
-            StartCoroutine(Main.Instance.Web.Login(username_inputField.text, pass_inputField.text));
+            StartCoroutine(Main.Instance.Web.Login1(username_inputField.text, pass_inputField.text));
         });
     }
 

@@ -11,11 +11,15 @@ public class Web : MonoBehaviour
         // A correct website page.
         //StartCoroutine(GetDate("http://localhost/EndlessRunner/GetDate.php"));
         //StartCoroutine(GetUsers("http://localhost/EndlessRunner/GetUsers.php"));
-        //StartCoroutine(Login("testuser", "123456"));
+        //StartCoroutine(Login1("kevin", "123456789"));
         //StartCoroutine(RegisterUser("testuserttri", "20220828", "Doctor"));
-
+        //StartCoroutine(GetPatients("http://localhost/EndlessRunner/GetPatients.php, form"));
         // A non-existing page.
         //StartCoroutine(GetDate("http://localhost/EndlessRunner/GetDate.php"));
+    }
+
+    public void ShowUserItems(){
+        StartCoroutine(GetPatients(Main.Instance.UserInfo.doctor_name));
     }
 
     IEnumerator GetDate(string uri)
@@ -70,13 +74,38 @@ public class Web : MonoBehaviour
         }
     }
 
-    public IEnumerator Login(string username, string password)
+    public IEnumerator Login1(string username, string password)
     {
         WWWForm form = new WWWForm();
         form.AddField("loginUser", username);
         form.AddField("loginPass", password);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/EndlessRunner/Login.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/EndlessRunner/Login1.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log(www.downloadHandler.text);
+                Main.Instance.UserInfo.SetInfo(username, password);
+                Main.Instance.UserInfo.SetID(www.downloadHandler.text);
+            }
+        }
+    }
+
+    
+    public IEnumerator RegisterUser1(string username, string password, string roles_name)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("loginUser", username);
+        form.AddField("loginPass", password);
+        form.AddField("roleUser", roles_name);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/EndlessRunner/RegisterUser1.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -91,15 +120,12 @@ public class Web : MonoBehaviour
         }
     }
 
-    
-    public IEnumerator RegisterUser(string username, string password, string role)
+    public IEnumerator GetPatients(string doctor_name)
     {
         WWWForm form = new WWWForm();
-        form.AddField("loginUser", username);
-        form.AddField("loginPass", password);
-        form.AddField("roleUser", role);
+        form.AddField("doctor_name", doctor_name);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/EndlessRunner/RegisterUser.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/EndlessRunner/GetPatients.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -109,7 +135,11 @@ public class Web : MonoBehaviour
             }
             else
             {
+                //show results as text
                 Debug.Log(www.downloadHandler.text);
+                string jsonArray = www.downloadHandler.text;
+
+                //Call callback function to pass results
             }
         }
     }
