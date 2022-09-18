@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
-//using System.IO.Ports;
-//using System.Threading;
-//using System;
+using System.IO.Ports;
+using System;
+
 
 public class PlayerMovement : MonoBehaviour
 {
-    //SerialPort sp = new SerialPort("COM5", 115200);
+    SerialPort myport = new SerialPort();
     bool alive = true;
     public GameObject uiObject;
     public GameObject uiObject2;
@@ -26,32 +26,31 @@ public class PlayerMovement : MonoBehaviour
     {
         uiObject.SetActive(false);
         uiObject2.SetActive(false);
-        //sp.Open();
-        //sp.ReadTimeout = 1;
+        myport.BaudRate = 115200;
+        myport.PortName = "COM5";
+        myport.Open();
         
     }
     private void FixedUpdate(){//�j�@�q�ɶ�����@��
         if(!alive) return;
         Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime; //���ʶZ���B��V       transform.forward: ���V��V�B
-        Vector3 horizontalMove = transform.right * horizontalInput*speed*Time.fixedDeltaTime*horizontalMultiplier;// ��������
+        Vector3 horizontalMove = transform.right * horizontalInput/10*speed*Time.fixedDeltaTime*horizontalMultiplier;// ��������
         rb.MovePosition(rb.position + forwardMove+ horizontalMove);
     }
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal"); //��L����
-        //if (sp.IsOpen){
-           // try{
-                //if (sp.ReadByte()>= 10){
-                    //transform.Translate(Vector3.left * Time.deltaTime*5);
-                //}
-                // if (sp.ReadByte()<= -10){
-                    //transform.Translate(Vector3.right * Time.deltaTime*5);
-               // }
-           // } catch (System.Exception){
-
-           // }
-       // }
+        //horizontalInput = Input.GetAxis("Horizontal");
+        string arduinoData = myport.ReadLine();
+        float movementData = float.Parse(arduinoData);
+        horizontalInput = movementData;
+        Debug.Log("movement data :" + movementData);
+        //if (movementData > 10){
+            //transform.Translate(Vector3.left * Time.deltaTime*5);
+        //}
+        //if (movementData < -10){
+            //transform.Translate(Vector3.right * Time.deltaTime*5);
+        
         if (Input.GetKeyDown(KeyCode.Space)){
             Jump();
         }
