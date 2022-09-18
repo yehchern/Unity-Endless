@@ -3,54 +3,95 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO.Ports;
+using System.Threading;
 using System;
-
 
 public class PlayerMovement : MonoBehaviour
 {
-    SerialPort myport = new SerialPort();
+    SerialPort sp = new SerialPort("COM5", 9600);
     bool alive = true;
     public GameObject uiObject;
     public GameObject uiObject2;
-    public float speed = 5;
-    [SerializeField] Rigidbody rb;//����A���U���O
+    public float speed = 8;
+    [SerializeField] Rigidbody rb;
 
+    float lastFloatArduinoData = 0f;
     float horizontalInput;
-    [SerializeField] float horizontalMultiplier = 2;//���U�[�t��������
+    [SerializeField] float horizontalMultiplier = 2;
 
     public float speedIncreasePerPoint = 0.1f;
     [SerializeField] float jumpForce = 400f;
     [SerializeField] LayerMask groundMask;
 
+
+    //////////////////////////////////////////
+    public float leftRightSpeed = 2;
     void Start()
     {
         uiObject.SetActive(false);
         uiObject2.SetActive(false);
-        myport.BaudRate = 115200;
-        myport.PortName = "COM5";
-        myport.Open();
+        //sp.Open();
+        //sp.ReadTimeout = 1;
         
+        sp.BaudRate = 9600;
+        sp.PortName = "COM5";
+        sp.Open();
+
     }
-    private void FixedUpdate(){//�j�@�q�ɶ�����@��
+
+   
+    private void FixedUpdate(){
         if(!alive) return;
-        Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime; //���ʶZ���B��V       transform.forward: ���V��V�B
-        Vector3 horizontalMove = transform.right * horizontalInput/10*speed*Time.fixedDeltaTime*horizontalMultiplier;// ��������
-        rb.MovePosition(rb.position + forwardMove+ horizontalMove);
-    }
+        //Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime; 
+        //Vector3 horizontalMove = transform.right * horizontalInput*speed*Time.fixedDeltaTime*horizontalMultiplier;
+        //rb.MovePosition(rb.position + forwardMove);//+ horizontalMove
+        //transform.Translate(Vector3.forward * Time.deltaTime * speed);
+    } /**/
+
     // Update is called once per frame
     void Update()
     {
         //horizontalInput = Input.GetAxis("Horizontal");
-        string arduinoData = myport.ReadLine();
-        float movementData = float.Parse(arduinoData);
-        horizontalInput = movementData;
-        Debug.Log("movement data :" + movementData);
-        //if (movementData > 10){
-            //transform.Translate(Vector3.left * Time.deltaTime*5);
+
+
+        string arduinoData = sp.ReadLine();
+        Debug.Log(arduinoData);
+
+        float floatArduinoData = float.Parse(arduinoData);
+        transform.Translate(Vector3.forward * Time.fixedDeltaTime * 3);
+
+
+        //if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (floatArduinoData > lastFloatArduinoData && ((floatArduinoData - lastFloatArduinoData)/20 > 0.02f))//right
+        {
+            if(this.gameObject.transform.position.x > -4f)
+            {
+                transform.Translate(Vector3.left * Time.fixedDeltaTime * leftRightSpeed);
+            }
+        }
+        //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        if (floatArduinoData <= lastFloatArduinoData && ((lastFloatArduinoData - floatArduinoData)/20 > 0.02f))//left   
+        {
+            if (this.gameObject.transform.position.x < 4f)
+            {
+                transform.Translate(Vector3.left * Time.fixedDeltaTime * leftRightSpeed * -1);
+            }
+        }
+
+        lastFloatArduinoData = floatArduinoData;
+        /**/
+        //if (sp.IsOpen){
+        // try{
+        //if (sp.ReadByte()>= 10){
+        //transform.Translate(Vector3.left * Time.deltaTime*5);
         //}
-        //if (movementData < -10){
-            //transform.Translate(Vector3.right * Time.deltaTime*5);
-        
+        // if (sp.ReadByte()<= -10){
+        //transform.Translate(Vector3.right * Time.deltaTime*5);
+        // }
+        // } catch (System.Exception){
+
+        // }
+        // }
         if (Input.GetKeyDown(KeyCode.Space)){
             Jump();
         }
