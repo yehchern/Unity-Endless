@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Threading;
 using System;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -32,6 +34,10 @@ public class PlayerMovement : MonoBehaviour
     //fairy
     public float max = 10;
     public float min = -10;
+
+
+    /*Exit or start window*/
+    [SerializeField] private ExitOrRestart myExitOrRestartWindow;
     void Start()
     {
         uiObject.SetActive(false);
@@ -126,8 +132,13 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Die(){
         alive = false;
-        //Restart the game
-        Invoke("Restart", 2);
+
+        if (!alive)
+        {
+            OpenWindow("hiiiiiiiiiiiiiiiii");
+        }
+            
+
     }
 
     void Restart(){
@@ -162,8 +173,32 @@ public class PlayerMovement : MonoBehaviour
         //elf.SetActive(false);
     }
 
-    
+    /*test window*/
+    private void OpenWindow(string message)
+    {
+        myExitOrRestartWindow.gameObject.SetActive(true);
+        sp.Close();
 
+        /*rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.Sleep();*/
+        //transform.Translate( Time.fixedDeltaTime * 3);
+        myExitOrRestartWindow.restartButton.onClick.AddListener(restartClick);
+        myExitOrRestartWindow.exitButton.onClick.AddListener(endClick);
+        myExitOrRestartWindow.messageText.text = message;
+    }
 
+    private void restartClick()
+    {
+        myExitOrRestartWindow.gameObject.SetActive(false);
+        Debug.Log("Yessssssssssssssss");
+        //Restart the game
+        Invoke("Restart", 2);
+    }
 
+    private void endClick()
+    {
+        myExitOrRestartWindow.gameObject.SetActive(false);
+        Debug.Log("enddddddddddddddddddddd");
+    }
 }

@@ -11,6 +11,8 @@ public class SceneLoader : MonoBehaviour
     SerialPort myport = new SerialPort("COM5", 9600);
     public string beginningData;
     public float floatBeginningData;
+    public static int stateChange;
+    private int stateChangetemp;
     public float maxData;
     public float minData;
     public int leftCount;
@@ -20,7 +22,7 @@ public class SceneLoader : MonoBehaviour
     public GameObject uiObject5;
 
     void Start()
-    { 
+    {
         myport.BaudRate = 9600;
         myport.PortName = "COM5";
         myport.Open();
@@ -35,7 +37,22 @@ public class SceneLoader : MonoBehaviour
     {
         string beginningData = myport.ReadLine();
         float floatBeginningData = float.Parse(beginningData);
-        Debug.Log(floatBeginningData);
+        //Debug.Log(floatBeginningData);
+        if (floatBeginningData < 0)
+        {
+            stateChange = -1;
+        }
+        else
+        {
+            stateChange = 1;
+        }
+        Debug.Log(stateChange);
+
+        if (stateChangetemp != stateChange)
+        {
+            stateChangetemp = stateChange;
+            changeFunction();
+        }
         /*for (int i = 0; i < length(floatBeginningData); i++) 
        {
         if (floatBeginningData > 0) {
@@ -46,10 +63,10 @@ public class SceneLoader : MonoBehaviour
         chooseMin();
        }
        }*/
-        if (floatBeginningData < -20)
+        if (leftCount > 10)
         {
-        StartCoroutine("WaitForSec5");
-        }   
+            StartCoroutine("WaitForSec5");
+        }
     }
 
     /*public void chooseMin(float floatBeginningData,float minData){
@@ -63,6 +80,10 @@ public class SceneLoader : MonoBehaviour
             maxData = floatBeginningData;
         }
     }*/
+    public void changeFunction()
+    {
+        leftCount += 1;
+    }
 
     IEnumerator WaitForSec3()
     {
