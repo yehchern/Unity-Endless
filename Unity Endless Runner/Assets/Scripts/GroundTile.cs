@@ -3,7 +3,7 @@ using UnityEngine;
 public class GroundTile : MonoBehaviour
 {
     GroundSpawner groundSpawner;
-    //[SerializeField] GameObject coinPrefab;
+    [SerializeField] GameObject coinPrefab;
     [SerializeField] GameObject obstaclePrefab;
     [SerializeField] GameObject tallObstaclePrefab;
     [SerializeField] float tallObstacleChance = 0.2f;
@@ -11,7 +11,7 @@ public class GroundTile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();//³sµ²GroundSpawner.CS³o­ÓÀÉ®×
+        groundSpawner = GameObject.FindObjectOfType<GroundSpawner>();//ï¿½sï¿½ï¿½GroundSpawner.CSï¿½oï¿½ï¿½ï¿½É®ï¿½
 
     }
 
@@ -33,13 +33,13 @@ public class GroundTile : MonoBehaviour
         //Spawn the obstacle at the position
         Instantiate(obstacleToSpawn, spawnPoint.position, Quaternion.identity, transform);
     }
-    //public void SpawnCoins(){
-        //int coinsToSpawn = 10;
-        //for (int i = 0; i<coinsToSpawn;i++){
-            //GameObject temp = Instantiate(coinPrefab, transform);
-            //temp.transform.position = GetRandomPointInCollider(GetComponent<Collider>());
-            //}
-        //}
+    public void SpawnCoins(){
+        int coinsToSpawn = 10;
+        for (int i = 0; i<coinsToSpawn;i++){
+            GameObject temp = Instantiate(coinPrefab, transform);
+            temp.transform.position = GetRandomPointInCollider(GetComponent<Collider>());
+            }
+        }
     Vector3 GetRandomPointInCollider (Collider collider){
         Vector3 point = new Vector3(
             Random.Range(collider.bounds.min.x, collider.bounds.max.x),Random.Range(collider.bounds.min.y, collider.bounds.max.y),Random.Range(collider.bounds.min.z, collider.bounds.max.z)

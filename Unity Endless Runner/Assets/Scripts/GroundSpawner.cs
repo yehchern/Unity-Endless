@@ -6,12 +6,12 @@ public class GroundSpawner : MonoBehaviour
     Vector3 nextSpawnPoint;
 
     public void SpawnTile(bool spawnItems){
-        GameObject temp = Instantiate(groundTile, nextSpawnPoint, Quaternion.identity);//­«¥ÍÂI
-        nextSpawnPoint = temp.transform.GetChild(1).transform.position;//GetChild(1): NextSpawnPoint(GameObject GroundTileªº¤lª«¥ó)
+        GameObject temp = Instantiate(groundTile, nextSpawnPoint, Quaternion.identity);//ï¿½ï¿½ï¿½ï¿½ï¿½I
+        nextSpawnPoint = temp.transform.GetChild(1).transform.position;//GetChild(1): NextSpawnPoint(GameObject GroundTileï¿½ï¿½ï¿½lï¿½ï¿½ï¿½ï¿½)
 
         if (spawnItems) {
             temp.GetComponent<GroundTile>().SpawnObstacle();
-            //temp.GetComponent<GroundTile>().SpawnCoins();
+            temp.GetComponent<GroundTile>().SpawnCoins();
         }
     }
     // Start is called before the first frame update
