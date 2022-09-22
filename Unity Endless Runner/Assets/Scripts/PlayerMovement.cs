@@ -12,12 +12,14 @@ public class PlayerMovement : MonoBehaviour
     bool alive = true;
     public GameObject uiObject;
     public GameObject uiObject2;
+
+    public GameObject elf;
     public float speed = 8;
     [SerializeField] Rigidbody rb;
 
     float lastFloatArduinoData = 0f;
     float horizontalInput;
-    [SerializeField] float horizontalMultiplier = 2;
+    //[SerializeField] float horizontalMultiplier = 2;
 
     public float speedIncreasePerPoint = 0.1f;
     [SerializeField] float jumpForce = 400f;
@@ -26,10 +28,15 @@ public class PlayerMovement : MonoBehaviour
 
     //////////////////////////////////////////
     public float leftRightSpeed = 2;
+
+    //fairy
+    public float max = 10;
+    public float min = -10;
     void Start()
     {
         uiObject.SetActive(false);
         uiObject2.SetActive(false);
+        //elf.SetActive(false);
         //sp.Open();
         //sp.ReadTimeout = 1;
         
@@ -78,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        lastFloatArduinoData = floatArduinoData;
+        
         /**/
         //if (sp.IsOpen){
         // try{
@@ -98,16 +105,24 @@ public class PlayerMovement : MonoBehaviour
         if(transform.position.y < -5){
             Die();
         }
-        if (Input.GetKeyDown(KeyCode.A)){
+
+
+        //if (Input.GetKeyDown(KeyCode.A))
+        if(max >= lastFloatArduinoData && lastFloatArduinoData > 0.0f && lastFloatArduinoData > floatArduinoData + 0.2f)
+        {
         
             StartCoroutine("WaitForSec");
             
         }
-        if (Input.GetKeyDown(KeyCode.D)){
+
+        //if (Input.GetKeyDown(KeyCode.D))
+        if (min <= lastFloatArduinoData && lastFloatArduinoData < 0.0f && lastFloatArduinoData + 0.2f < floatArduinoData)
+        {
             
             StartCoroutine("WaitForSec2");
             
         }
+        lastFloatArduinoData = floatArduinoData;
     }
     public void Die(){
         alive = false;
@@ -130,17 +145,21 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator WaitForSec()
     {
         yield return new WaitForSeconds(1);
+        //elf.SetActive(true);
         uiObject.SetActive(true);
         yield return new WaitForSeconds(1);
         uiObject.SetActive(false);
+        //elf.SetActive(false);
     }
 
     IEnumerator WaitForSec2()
     {
         yield return new WaitForSeconds(1);
+        //elf.SetActive(true);
         uiObject2.SetActive(true);
         yield return new WaitForSeconds(1);
         uiObject2.SetActive(false);
+        //elf.SetActive(false);
     }
 
     
