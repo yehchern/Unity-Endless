@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         string arduinoData = sp.ReadLine();
-        Debug.Log(arduinoData);
+       // Debug.Log(arduinoData);
 
         float floatArduinoData = float.Parse(arduinoData);
         transform.Translate(Vector3.forward * Time.fixedDeltaTime * 3);
@@ -177,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
     private void OpenWindow(string message)
     {
         myExitOrRestartWindow.gameObject.SetActive(true);
-        sp.Close();
+        
 
         /*rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
@@ -186,6 +186,7 @@ public class PlayerMovement : MonoBehaviour
         myExitOrRestartWindow.restartButton.onClick.AddListener(restartClick);
         myExitOrRestartWindow.exitButton.onClick.AddListener(endClick);
         myExitOrRestartWindow.messageText.text = message;
+        sp.Close();
     }
 
     private void restartClick()
@@ -196,9 +197,10 @@ public class PlayerMovement : MonoBehaviour
         Invoke("Restart", 2);
     }
 
-    private void endClick()
+    public void endClick()
     {
         myExitOrRestartWindow.gameObject.SetActive(false);
         Debug.Log("enddddddddddddddddddddd");
+        SceneManager.LoadScene(4);
     }
 }
