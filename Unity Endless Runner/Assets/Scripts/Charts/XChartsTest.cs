@@ -41,27 +41,25 @@ public class XChartsTest : MonoBehaviour
         if (countClickCoinButtonTimes == 1)
         {//click button one time
             //Debug.Log(countClickCoinButtonTimes);
-            //chart.RemoveData()
-            //createCoinChart();
+            //createChart(10, 20, "the number of coins every time when you play the game");
 
         }
         else if(countClickCoinButtonTimes == 2)
         {
             countClickCoinButtonTimes = 0;
-            createChart(10, 20);
+            createChart(10, 20, "the number of coins every time when you play the game");
         }
 
         if (countClickMoveButtonTimes == 1)
         {//click button one time
-            //Debug.Log(countClickCoinButtonTimes);
-            //chart.RemoveData()
-            //createCoinChart();
+            //Debug.Log(countClickMoveButtonTimes);
+            //createChart(40, 50, "the number of moving every time when you play the game");
 
         }
         else if (countClickMoveButtonTimes == 2)
         {
             countClickMoveButtonTimes = 0;
-            createChart(40, 50);
+            createChart(40, 50, "the number of moving every time when you play the game");
         }
 
 
@@ -80,7 +78,7 @@ public class XChartsTest : MonoBehaviour
         Debug.Log(countClickMoveButtonTimes);
     }
 
-    public void createChart(int num1, int num2)
+    public void createChart(int num1, int num2, string s)
     {
         //buttonForCoin.gameObject.SetActive(false);//hide button
 
@@ -97,7 +95,7 @@ public class XChartsTest : MonoBehaviour
 
         //set title
         var title = chart.GetOrAddChartComponent<Title>();
-        title.text = "the number of coins every time when you play the game";
+        title.text = s;
 
         //show tip window and legend or not
         var tooltip = chart.GetOrAddChartComponent<Tooltip>();
@@ -110,12 +108,13 @@ public class XChartsTest : MonoBehaviour
         var xAxis = chart.GetOrAddChartComponent<XAxis>();
         xAxis.splitNumber = 5;//expected splitNumbers
         xAxis.boundaryGap = true;// edge of axis is blank or not
-        xAxis.type = Axis.AxisType.Category;// type of axis: Value°BCategory°BLog°BTime
+        xAxis.type = Axis.AxisType.Category;// type of axis: Value„ÄÅCategory„ÄÅLog„ÄÅTime
 
         var yAxis = chart.GetOrAddChartComponent<YAxis>();
         yAxis.type = Axis.AxisType.Value;
 
         chart.RemoveData();
+        //chart.ClearData();
         chart.AddSerie<Line>("line");
 
         for (int i = 1; i <= 5; i++)
