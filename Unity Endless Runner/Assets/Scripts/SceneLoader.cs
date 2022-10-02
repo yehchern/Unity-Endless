@@ -13,8 +13,14 @@ public class SceneLoader : MonoBehaviour
     public float floatBeginningData;
     public static int stateChange;
     private int stateChangetemp;
-    public float maxData;
-    public float minData;
+    //List<float> LeftMovement = new List<float>();
+    //List<float> RightMovement = new List<float>(); 
+    public float maxData = -10000;
+    //public float maxData2;
+    public float maxTemp;
+    public float minData = 10000;
+    //public float minData2;
+    public float minTemp;
     public int leftCount;
     public int rightCount;
     public GameObject uiObject3;
@@ -41,49 +47,60 @@ public class SceneLoader : MonoBehaviour
         if (floatBeginningData < 0)
         {
             stateChange = -1;
+            
+            if(floatBeginningData < minData){
+            minData = floatBeginningData;
+            Debug.Log(minData);
         }
+            //RightMovement.Add(floatBeginningData);
+        
         else
         {
             stateChange = 1;
+           // LeftMovement.Add(floatBeginningData);
+            if(floatBeginningData > maxData){
+            maxData = floatBeginningData;
+            Debug.Log(maxData);
         }
-        Debug.Log(stateChange);
-
+        }
+        
+        
         if (stateChangetemp != stateChange)
         {
             stateChangetemp = stateChange;
             changeFunction();
         }
-        /*for (int i = 0; i < length(floatBeginningData); i++) 
-       {
-        if (floatBeginningData > 0) {
-        maxData = floatBeginningData;
-        chooseMax();
-       } else if (floatBeginningData < 0){
-        minData = floatBeginningData;
-        chooseMin();
-       }
-       }*/
-        if (leftCount > 10)
+        
+        if (leftCount > 6)
         {
             StartCoroutine("WaitForSec5");
         }
     }
 
-    /*public void chooseMin(float floatBeginningData,float minData){
-        if(floatBeginningData < minData){
-            minData = floatBeginningData;
-        }
+    
     }
-
-    public void chooseMax(float floatBeginningData,float maxData){
-        if(floatBeginningData > maxData){
-            maxData = floatBeginningData;
-        }
-    }*/
     public void changeFunction()
     {
         leftCount += 1;
     }
+    
+
+    /*public void minChoose()
+    {
+        minTemp = 0;
+        if (floatBeginningData < minTemp){
+            minTemp = floatBeginningData;
+        }
+        
+    }
+
+    public void maxChoose()
+    {
+        maxTemp = 0;
+        if (floatBeginningData > maxTemp){
+            maxTemp = floatBeginningData;
+        }
+    }*/
 
     IEnumerator WaitForSec3()
     {

@@ -38,6 +38,13 @@ public class PlayerMovement : MonoBehaviour
 
     /*Exit or start window*/
     [SerializeField] private ExitOrRestart myExitOrRestartWindow;
+
+    /*count wave time*/
+    public int leftCount;
+    public int rightCount;
+    public static int stateChange;
+    private int stateChangetemp;
+
     void Start()
     {
         uiObject.SetActive(false);
@@ -68,14 +75,14 @@ public class PlayerMovement : MonoBehaviour
 
 
         string arduinoData = sp.ReadLine();
-       // Debug.Log(arduinoData);
+       Debug.Log(arduinoData);
 
         float floatArduinoData = float.Parse(arduinoData);
         transform.Translate(Vector3.forward * Time.fixedDeltaTime * 3);
 
 
         //if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        if (floatArduinoData > lastFloatArduinoData && ((floatArduinoData - lastFloatArduinoData)/20 > 0.02f))//right
+        if (floatArduinoData > lastFloatArduinoData && ((floatArduinoData - lastFloatArduinoData) > 0.02f))//right
         {
             if(this.gameObject.transform.position.x > -4f)
             {
@@ -83,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        if (floatArduinoData <= lastFloatArduinoData && ((lastFloatArduinoData - floatArduinoData)/20 > 0.02f))//left   
+        if (floatArduinoData <= lastFloatArduinoData && ((lastFloatArduinoData - floatArduinoData) > 0.02f))//left   
         {
             if (this.gameObject.transform.position.x < 4f)
             {
@@ -92,19 +99,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         
-        /**/
-        //if (sp.IsOpen){
-        // try{
-        //if (sp.ReadByte()>= 10){
-        //transform.Translate(Vector3.left * Time.deltaTime*5);
-        //}
-        // if (sp.ReadByte()<= -10){
-        //transform.Translate(Vector3.right * Time.deltaTime*5);
-        // }
-        // } catch (System.Exception){
-
-        // }
-        // }
         if (Input.GetKeyDown(KeyCode.Space)){
             Jump();
         }
@@ -113,8 +107,31 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
+        //count wave time
+        if (floatArduinoData < 0)
+        {
+            stateChange = -1;
+        }
+        else
+        {
+            stateChange = 1;
+        }
+        Debug.Log(stateChange);
+
+        if (stateChangetemp != stateChange)
+        {
+            stateChangetemp = stateChange;
+            changeFunction();
+        }
+
+        if (leftCount >= 50)
+        {
+            Die();
+        }
+
+
         //if (Input.GetKeyDown(KeyCode.A))
-        if(max >= lastFloatArduinoData && lastFloatArduinoData > 0.0f && lastFloatArduinoData > floatArduinoData + 0.2f)
+        if (max >= lastFloatArduinoData && lastFloatArduinoData > 0.0f && lastFloatArduinoData > floatArduinoData + 0.2f)
         {
         
             StartCoroutine("WaitForSec");
@@ -135,10 +152,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (!alive)
         {
-            OpenWindow("hiiiiiiiiiiiiiiiii");
+            OpenWindow("Restart or End");
         }
             
 
+    }
+
+
+    public void changeFunction()
+    {
+        leftCount += 1;
     }
 
     void Restart(){
