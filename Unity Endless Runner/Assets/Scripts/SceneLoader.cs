@@ -8,7 +8,7 @@ using System;
 
 public class SceneLoader : MonoBehaviour
 {
-    SerialPort myport = new SerialPort("COM8", 115200);
+    SerialPort myport = new SerialPort("COM5", 9600);
     public string beginningData;
     public float floatBeginningData;
     public int stateChange;
@@ -27,8 +27,8 @@ public class SceneLoader : MonoBehaviour
 
     void Start()
     {
-        myport.BaudRate = 115200;
-        myport.PortName = "COM8";
+        myport.BaudRate = 9600;
+        myport.PortName = "COM5";
         myport.Open();
         //uiObject3.SetActive(false);
         //uiObject4.SetActive(false);
@@ -122,6 +122,6 @@ public class SceneLoader : MonoBehaviour
         uiObject5.SetActive(true);
         yield return new WaitForSeconds(3);
         uiObject5.SetActive(false);
-        //SceneManager.LoadScene(2);
+        SceneManager.LoadScene(2);
     }
 }

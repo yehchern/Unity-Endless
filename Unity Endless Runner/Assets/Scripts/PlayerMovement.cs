@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     //Debug.Log("maxdata is" + SceneLoader.maxData);
     //Debug.Log(SceneLoader.minData);
     
-    SerialPort sp = new SerialPort("COM5", 115200);
+    SerialPort sp = new SerialPort("COM5", 9600);
     bool alive = true;
     public GameObject uiObject;
     public GameObject uiObject2;
@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         //sp.Open();
         //sp.ReadTimeout = 1;
         
-        sp.BaudRate = 115200;
+        sp.BaudRate = 9600;
         sp.PortName = "COM5";
         sp.Open();
 
@@ -128,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
             changeFunction();
         }
 
-        if (leftCount >= 2)
+        if (leftCount >= 50)
         {
             Die();
         }
