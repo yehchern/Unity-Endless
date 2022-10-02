@@ -13,14 +13,12 @@ public class SceneLoader : MonoBehaviour
     public float floatBeginningData;
     public static int stateChange;
     private int stateChangetemp;
-    //List<float> LeftMovement = new List<float>();
-    //List<float> RightMovement = new List<float>(); 
-    public float maxData = -10000;
+    //public static float maxData = -10000;
     //public float maxData2;
-    public float maxTemp;
-    public float minData = 10000;
+    //public float maxTemp;
+    //public static float minData = 10000;
     //public float minData2;
-    public float minTemp;
+    //public float minTemp;
     public int leftCount;
     public int rightCount;
     public GameObject uiObject3;
@@ -43,14 +41,14 @@ public class SceneLoader : MonoBehaviour
     {
         string beginningData = myport.ReadLine();
         float floatBeginningData = float.Parse(beginningData);
-        //Debug.Log(floatBeginningData);
+        Debug.Log(floatBeginningData);
         if (floatBeginningData < 0)
         {
             stateChange = -1;
             
-            if(floatBeginningData < minData){
-            minData = floatBeginningData;
-            Debug.Log(minData);
+            //if(floatBeginningData < minData){
+            //minData = floatBeginningData;
+            //Debug.Log(minData);
         }
             //RightMovement.Add(floatBeginningData);
         
@@ -58,10 +56,10 @@ public class SceneLoader : MonoBehaviour
         {
             stateChange = 1;
            // LeftMovement.Add(floatBeginningData);
-            if(floatBeginningData > maxData){
-            maxData = floatBeginningData;
-            Debug.Log(maxData);
-        }
+            //if(floatBeginningData > maxData){
+            //maxData = floatBeginningData;
+            //Debug.Log(maxData);
+        //}
         }
         
         
@@ -78,7 +76,7 @@ public class SceneLoader : MonoBehaviour
     }
 
     
-    }
+    
     public void changeFunction()
     {
         leftCount += 1;

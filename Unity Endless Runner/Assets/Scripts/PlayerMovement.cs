@@ -10,6 +10,10 @@ using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //public void getmaxMin(){
+    //Debug.Log("maxdata is" + SceneLoader.maxData);
+    //Debug.Log(SceneLoader.minData);
+    
     SerialPort sp = new SerialPort("COM5", 9600);
     bool alive = true;
     public GameObject uiObject;
@@ -40,11 +44,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private ExitOrRestart myExitOrRestartWindow;
 
     /*count wave time*/
-    public int leftCount;
-    public int rightCount;
-    public static int stateChange;
-    private int stateChangetemp;
-
+    //public int leftCount;
+    //public int rightCount;
+    //public static int stateChange;
+    //private int stateChangetemp;
+    
     void Start()
     {
         uiObject.SetActive(false);
@@ -75,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         string arduinoData = sp.ReadLine();
-       Debug.Log(arduinoData);
+        Debug.Log(arduinoData);
 
         float floatArduinoData = float.Parse(arduinoData);
         transform.Translate(Vector3.forward * Time.fixedDeltaTime * 3);
@@ -108,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         //count wave time
-        if (floatArduinoData < 0)
+        /*if (floatArduinoData < 0)
         {
             stateChange = -1;
         }
@@ -127,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
         if (leftCount >= 50)
         {
             Die();
-        }
+        }*/
 
 
         //if (Input.GetKeyDown(KeyCode.A))
@@ -159,10 +163,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    public void changeFunction()
+    /*public void changeFunction()
     {
         leftCount += 1;
-    }
+    }*/
 
     void Restart(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
