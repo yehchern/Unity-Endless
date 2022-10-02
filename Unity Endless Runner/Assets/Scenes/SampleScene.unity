@@ -685,7 +685,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad2bdb2b66697c4eac391a760daaa17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  script: {fileID: 0}
   uiObject: {fileID: 0}
   uiObject2: {fileID: 0}
   elf: {fileID: 0}
@@ -1362,7 +1361,6 @@ GameObject:
   - component: {fileID: 1269921440}
   - component: {fileID: 1269921441}
   - component: {fileID: 1269921442}
-  - component: {fileID: 1269921443}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1477,7 +1475,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad2bdb2b66697c4eac391a760daaa17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  script: {fileID: 1269921443}
   uiObject: {fileID: 1525427999}
   uiObject2: {fileID: 884761163}
   elf: {fileID: 0}
@@ -1521,29 +1518,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &1269921443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269921435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00c00d31d2755b044a71b5a57bfbdc3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  beginningData: 
-  floatBeginningData: 0
-  maxData: -10000
-  maxTemp: 0
-  minData: 10000
-  minTemp: 0
-  leftCount: 0
-  rightCount: 0
-  uiObject3: {fileID: 0}
-  uiObject4: {fileID: 0}
-  uiObject5: {fileID: 0}
 --- !u!1 &1352529184
 GameObject:
   m_ObjectHideFlags: 0

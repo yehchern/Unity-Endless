@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     //Debug.Log("maxdata is" + SceneLoader.maxData);
     //Debug.Log(SceneLoader.minData);
     
-    SerialPort sp = new SerialPort("COM5", 9600);
+    SerialPort sp = new SerialPort("COM5", 115200);
     bool alive = true;
     public GameObject uiObject;
     public GameObject uiObject2;
@@ -43,11 +43,11 @@ public class PlayerMovement : MonoBehaviour
     /*Exit or start window*/
     [SerializeField] private ExitOrRestart myExitOrRestartWindow;
 
-    /*count wave time*/
-    //public int leftCount;
-    //public int rightCount;
-    //public static int stateChange;
-    //private int stateChangetemp;
+    //count wave time
+    public int leftCount;
+    public int rightCount;
+    public static int stateChange;
+    private int stateChangetemp;
     
     void Start()
     {
@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         //sp.Open();
         //sp.ReadTimeout = 1;
         
-        sp.BaudRate = 9600;
+        sp.BaudRate = 115200;
         sp.PortName = "COM5";
         sp.Open();
 
@@ -112,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         //count wave time
-        /*if (floatArduinoData < 0)
+        if (floatArduinoData < 0)
         {
             stateChange = -1;
         }
@@ -128,10 +128,10 @@ public class PlayerMovement : MonoBehaviour
             changeFunction();
         }
 
-        if (leftCount >= 50)
+        if (leftCount >= 2)
         {
             Die();
-        }*/
+        }
 
 
         //if (Input.GetKeyDown(KeyCode.A))
@@ -163,10 +163,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    /*public void changeFunction()
+    public void changeFunction()
     {
         leftCount += 1;
-    }*/
+    }
 
     void Restart(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -228,6 +228,6 @@ public class PlayerMovement : MonoBehaviour
     {
         myExitOrRestartWindow.gameObject.SetActive(false);
         Debug.Log("enddddddddddddddddddddd");
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(5);
     }
 }
