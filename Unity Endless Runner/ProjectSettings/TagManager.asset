@@ -12,8 +12,8 @@ TagManager:
   - Water
   - UI
   - Ground
+  - SolidObjects2
   - SolidObjects
-  - 
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 2137099347
+    locked: 0
+  - name: Foregroundback
+    uniqueID: 1111712425
     locked: 0
   - name: Foreground
     uniqueID: 906683039

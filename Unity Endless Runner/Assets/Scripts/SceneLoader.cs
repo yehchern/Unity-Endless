@@ -124,6 +124,6 @@ public class SceneLoader : MonoBehaviour
         uiObject5.SetActive(true);
         yield return new WaitForSeconds(3);
         uiObject5.SetActive(false);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 }

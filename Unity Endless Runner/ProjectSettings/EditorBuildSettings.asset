@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Rehab universe.unity
+    guid: c3d7ee16441beda43a2b64360e8f55c2
+  - enabled: 1
     path: Assets/Scenes/Rehab tutorial.unity
     guid: d101499e6146112458f46035bd662cb3
   - enabled: 1

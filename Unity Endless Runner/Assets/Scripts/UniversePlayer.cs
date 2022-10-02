@@ -37,6 +37,8 @@ public class UniversePlayer : MonoBehaviour
         animator.SetBool("isMoving", isMoving);
     }
 
+
+
     IEnumerator Move(Vector3 targetPos){
         isMoving = true;
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
@@ -55,4 +57,8 @@ public class UniversePlayer : MonoBehaviour
 
     return true;
     }
-}
+
+    
+
+   }
+
