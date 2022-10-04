@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/characterSelection/TestGameScene.unity
     guid: 6b247cfd8dd981f478cac263abcd9003
+  - enabled: 1
+    path: Assets/Scenes/ChartForPatient.unity
+    guid: e9070d2a59c32cf4d8f4b527e30c24f5
   m_configObjects: {}

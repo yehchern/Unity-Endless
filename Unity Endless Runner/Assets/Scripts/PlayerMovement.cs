@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Threading;
 using System;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
     public int rightCount;
     public static int stateChange;
     private int stateChangetemp;
-    
+
     void Start()
     {
         uiObject.SetActive(false);
@@ -76,7 +77,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //horizontalInput = Input.GetAxis("Horizontal");
-
 
         string arduinoData = sp.ReadLine();
         Debug.Log(arduinoData);
@@ -156,6 +156,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (!alive)
         {
+            int s = GameManager.inst.scoreReturn();
+            Debug.Log(s);
+            StartCoroutine(UploadCoinsData(s, "user01"));
             OpenWindow("Restart or End");
         }
             
@@ -228,6 +231,30 @@ public class PlayerMovement : MonoBehaviour
     {
         myExitOrRestartWindow.gameObject.SetActive(false);
         Debug.Log("enddddddddddddddddddddd");
+        StartCoroutine(UploadCoinsData(100000, "user00"));
         SceneManager.LoadScene(5);
+    }
+
+
+    /*connect to database*/
+    IEnumerator UploadCoinsData(int coins, string usernames)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("score", coins);
+        form.AddField("user", usernames);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/unityPatronus/insertChartData.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                Debug.Log("Form upload complete!");
+            }
+        }
     }
 }

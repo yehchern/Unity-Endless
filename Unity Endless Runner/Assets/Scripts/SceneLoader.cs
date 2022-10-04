@@ -13,10 +13,10 @@ public class SceneLoader : MonoBehaviour
     public float floatBeginningData;
     public int stateChange;
     public int stateChangetemp;
-    //public static float maxData = -10000;
+    public static float maxData = -10000;
     //public float maxData2;
     //public float maxTemp;
-    //public static float minData = 10000;
+    public static float minData = 10000;
     //public float minData2;
     //public float minTemp;
     public int leftCount;
@@ -41,25 +41,25 @@ public class SceneLoader : MonoBehaviour
     {
         string beginningData = myport.ReadLine();
         float floatBeginningData = float.Parse(beginningData);
-        Debug.Log(floatBeginningData);
+        //Debug.Log(floatBeginningData);
         if (floatBeginningData < 0)
         {
             stateChange = -1;
             
-            //if(floatBeginningData < minData){
-            //minData = floatBeginningData;
-            //Debug.Log(minData);
+            if(floatBeginningData < minData){
+            minData = floatBeginningData;
+            Debug.Log(minData);
         }
             //RightMovement.Add(floatBeginningData);
-        
+        }
         else
         {
             stateChange = 1;
            // LeftMovement.Add(floatBeginningData);
-            //if(floatBeginningData > maxData){
-            //maxData = floatBeginningData;
-            //Debug.Log(maxData);
-        //}
+            if(floatBeginningData > maxData){
+            maxData = floatBeginningData;
+            Debug.Log(maxData);
+        }
         }
         
         
@@ -69,7 +69,7 @@ public class SceneLoader : MonoBehaviour
             changeFunction();
         }
         
-        if (leftCount > 20)
+        if (leftCount > 6)
         {
             StartCoroutine("WaitForSec5");
         }

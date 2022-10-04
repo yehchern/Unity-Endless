@@ -32,4 +32,8 @@ public class GameManager : MonoBehaviour
     {
         
     }
+    public int scoreReturn()
+    {
+        return score;
+    }
 }
