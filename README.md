@@ -25,3 +25,6 @@ https://github.com/XCharts-Team/XCharts
 
 ### Read Arduino Data
 https://answers.unity.com/questions/1255905/arduino-accelerometer-data-reading-problem.html
+
+### mysql to unity
+https://www.youtube.com/watch?v=utwSPVGZiiw&list=PLTm4FjoXO7nfn0jB0Ig6UbZU1pUHSLhRU&index=1
