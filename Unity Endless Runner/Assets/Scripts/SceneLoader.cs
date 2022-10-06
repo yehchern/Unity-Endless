@@ -142,7 +142,7 @@ public class SceneLoader : MonoBehaviour
         yield return new WaitForSeconds(3);
         uiObject6.SetActive(false);
         uiObject7.SetActive(true);
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(15);
         uiObject7.SetActive(false);
         myport.BaudRate = 9600;
         myport.PortName = "COM5";

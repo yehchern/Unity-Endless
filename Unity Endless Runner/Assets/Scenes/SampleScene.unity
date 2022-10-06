@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4477232, g: 0.49770123, b: 0.5754048, a: 1}
+  m_IndirectSpecularColor: {r: 0.44772267, g: 0.4977005, b: 0.5754041, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -929,11 +929,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!4 &232482740 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0e69aa4fcad170745b20fbe790d52c7b, type: 3}
-  m_PrefabInstance: {fileID: 576915931}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &232482741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,8 +956,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   leftRightSpeed: 4
-  max: 10
-  min: -10
   myExitOrRestartWindow: {fileID: 1352529188}
   leftCount: 0
   rightCount: 0
@@ -4869,7 +4862,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3940bdc7cb906dc4e9dc95943ef384a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 232482740}
+  player: {fileID: 1028726654}
 --- !u!1001 &976486018
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5194,6 +5187,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 975841765f4ebb24d801d47e0714e8ac, type: 3}
+--- !u!4 &1028726654 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 975841765f4ebb24d801d47e0714e8ac, type: 3}
+  m_PrefabInstance: {fileID: 1028726653}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1036427242 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4244444072601190, guid: 486897b2b94b3664da99ce6f48ac62cb, type: 3}
@@ -6373,8 +6371,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   leftRightSpeed: 4
-  max: 10
-  min: -10
   myExitOrRestartWindow: {fileID: 1352529188}
   leftCount: 0
   rightCount: 0
@@ -8342,8 +8338,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   leftRightSpeed: 4
-  max: 10
-  min: -10
   myExitOrRestartWindow: {fileID: 1352529188}
   leftCount: 0
   rightCount: 0
