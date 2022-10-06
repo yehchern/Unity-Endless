@@ -16,12 +16,12 @@ public class PlayerMovement : MonoBehaviour
     //Debug.Log(SceneLoader.minData);
     
     SerialPort sp = new SerialPort("COM5", 9600);
-    //SerialPort backport = new SerialPort("COM7", 9600);
+    SerialPort backport = new SerialPort("COM7", 9600);
     bool alive = true;
     public GameObject uiObject;
     public GameObject uiObject2;
     public GameObject uiObject3;
-    //List<float> turningpoint = new List<float>();
+    
 
     public GameObject elf;
     public float speed = 8;
@@ -33,8 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public string tempdirection;
     float lastLeftMax;
     float lastRightMin;
-    //float LeftMax;
-    //float RightMin;
+    
 
     float lastFloatArduinoData = 0f;
     float horizontalInput;
@@ -49,8 +48,8 @@ public class PlayerMovement : MonoBehaviour
     public float leftRightSpeed = 2;
 
     //fairy
-    public float max = 10;
-    public float min = -10;
+    //public float max = 10;
+    //public float min = -10;
 
 
     /*Exit or start window*/
@@ -73,9 +72,9 @@ public class PlayerMovement : MonoBehaviour
         sp.BaudRate = 9600;
         sp.PortName = "COM5";
         sp.Open();
-        //backport.BaudRate = 9600;
-        //backport.PortName = "COM7";
-        //backport.Open();
+        backport.BaudRate = 9600;
+        backport.PortName = "COM7";
+        backport.Open();
 
     }
 
@@ -100,8 +99,8 @@ public class PlayerMovement : MonoBehaviour
         transform.Translate(Vector3.forward * Time.fixedDeltaTime * 3);
 
         //back
-        //string backData = backport.ReadLine();
-        //float floatbackData = float.Parse(backData);
+        string backData = backport.ReadLine();
+        float floatbackData = float.Parse(backData);
 
 
         //if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
@@ -154,9 +153,9 @@ public class PlayerMovement : MonoBehaviour
 
         //back
 
-        //if(floatbackData > 25 ||floatbackData < -25){
-          //   StartCoroutine("WaitForSec3");
-        //}
+        if(floatbackData > 25 ||floatbackData < -25){
+             StartCoroutine("WaitForSec3");
+        }
         //hint from elf
         /*if (max >= lastFloatArduinoData && lastFloatArduinoData > 0.0f && lastFloatArduinoData > floatArduinoData + 0.2f)
         {
@@ -189,8 +188,9 @@ public class PlayerMovement : MonoBehaviour
         //if (floatArduinoData > 0 && floatArduinoData > lastFloatArduinoData){
         //    direction = "left";
 
-        if (floatArduinoData > 0 && floatArduinoData < lastFloatArduinoData){
-            direction = "leftTurnRight";
+    if (floatArduinoData > 0 && floatArduinoData < lastFloatArduinoData)
+    {
+        direction = "leftTurnRight";
         } else if (floatArduinoData < 0 && floatArduinoData > lastFloatArduinoData){
             direction = "rightTurnLeft";
         } 
@@ -221,6 +221,16 @@ public class PlayerMovement : MonoBehaviour
         }
         Debug.Log(lastLeftMax);
         Debug.Log(lastRightMin); 
+
+        //hint from elf
+        if (lastLeftMax - (SceneLoader.maxData - SceneLoader.datatemp) > 20.0f)
+        {
+            StartCoroutine("WaitForSec");
+        }
+        if(lastRightMin - (SceneLoader.minData - SceneLoader.datatemp) > -20.0f)
+        {
+            StartCoroutine("WaitForSec2");
+        }
         /*} else if (floatArduinoData > 0 && floatArduinoData < lastFloatArduinoData){
             direction = "lefttoright";
         } else if (floatArduinoData < 0 && floatArduinoData < lastFloatArduinoData){
@@ -265,6 +275,7 @@ public class PlayerMovement : MonoBehaviour
         lastFloatArduinoData = floatArduinoData;
     }
     
+    
     public void Die(){
         alive = false;
 
@@ -287,7 +298,8 @@ public class PlayerMovement : MonoBehaviour
     
 
     void Restart(){
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(1);
     }
     void Jump(){
         //Check whether we are currently grounded
@@ -348,14 +360,14 @@ public class PlayerMovement : MonoBehaviour
         myExitOrRestartWindow.gameObject.SetActive(false);
         Debug.Log("Yessssssssssssssss");
         //Restart the game
-        Invoke("Restart", 2);
+        Invoke("Restart", 1);
     }
 
     public void endClick()
     {
         myExitOrRestartWindow.gameObject.SetActive(false);
         Debug.Log("enddddddddddddddddddddd");
-        StartCoroutine(UploadCoinsData(100000, "user00"));
+        //StartCoroutine(UploadCoinsData(100000, "user00"));
         SceneManager.LoadScene(5);
     }
 
@@ -381,4 +393,5 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
 }

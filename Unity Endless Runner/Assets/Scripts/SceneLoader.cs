@@ -9,7 +9,7 @@ using System;
 public class SceneLoader : MonoBehaviour
 {
     SerialPort myport = new SerialPort("COM5", 9600);
-    SerialPort boneport = new SerialPort("COM8", 9600);
+    SerialPort boneport = new SerialPort("COM7", 9600);
     public string beginningData;
     public float floatBeginningData;
     public static float datatemp;
@@ -148,7 +148,7 @@ public class SceneLoader : MonoBehaviour
         myport.PortName = "COM5";
         myport.Open();
         boneport.BaudRate = 9600;
-        boneport.PortName = "COM8";
+        boneport.PortName = "COM7";
         boneport.Open();
     }
 
