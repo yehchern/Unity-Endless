@@ -16,13 +16,25 @@ public class PlayerMovement : MonoBehaviour
     //Debug.Log(SceneLoader.minData);
     
     SerialPort sp = new SerialPort("COM5", 9600);
+    //SerialPort backport = new SerialPort("COM7", 9600);
     bool alive = true;
     public GameObject uiObject;
     public GameObject uiObject2;
+    public GameObject uiObject3;
+    //List<float> turningpoint = new List<float>();
 
     public GameObject elf;
     public float speed = 8;
+    public int value;
     [SerializeField] Rigidbody rb;
+
+    //turning point
+    public string direction;
+    public string tempdirection;
+    float lastLeftMax;
+    float lastRightMin;
+    //float LeftMax;
+    //float RightMin;
 
     float lastFloatArduinoData = 0f;
     float horizontalInput;
@@ -61,6 +73,9 @@ public class PlayerMovement : MonoBehaviour
         sp.BaudRate = 9600;
         sp.PortName = "COM5";
         sp.Open();
+        //backport.BaudRate = 9600;
+        //backport.PortName = "COM7";
+        //backport.Open();
 
     }
 
@@ -79,10 +94,14 @@ public class PlayerMovement : MonoBehaviour
         //horizontalInput = Input.GetAxis("Horizontal");
 
         string arduinoData = sp.ReadLine();
-        Debug.Log(arduinoData);
+        //Debug.Log(arduinoData);
 
         float floatArduinoData = float.Parse(arduinoData);
         transform.Translate(Vector3.forward * Time.fixedDeltaTime * 3);
+
+        //back
+        //string backData = backport.ReadLine();
+        //float floatbackData = float.Parse(backData);
 
 
         //if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
@@ -120,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
         {
             stateChange = 1;
         }
-        Debug.Log(stateChange);
+        //Debug.Log(stateChange);
 
         if (stateChangetemp != stateChange)
         {
@@ -133,31 +152,126 @@ public class PlayerMovement : MonoBehaviour
             Die();
         }
 
+        //back
 
-        //if (Input.GetKeyDown(KeyCode.A))
-        if (max >= lastFloatArduinoData && lastFloatArduinoData > 0.0f && lastFloatArduinoData > floatArduinoData + 0.2f)
+        //if(floatbackData > 25 ||floatbackData < -25){
+          //   StartCoroutine("WaitForSec3");
+        //}
+        //hint from elf
+        /*if (max >= lastFloatArduinoData && lastFloatArduinoData > 0.0f && lastFloatArduinoData > floatArduinoData + 0.2f)
         {
         
             StartCoroutine("WaitForSec");
             
         }
 
-        //if (Input.GetKeyDown(KeyCode.D))
         if (min <= lastFloatArduinoData && lastFloatArduinoData < 0.0f && lastFloatArduinoData + 0.2f < floatArduinoData)
         {
             
             StartCoroutine("WaitForSec2");
             
+        }*/
+        /*switch (value)
+                {
+                    case 1:
+                        if (floatArduinoData > 0.0f && floatArduinoData < lastFloatArduinoData){
+                            turningpoint.Add(lastFloatArduinoData);
+                            break;
+                        }
+                            
+                    case 2:
+                        if (floatArduinoData < 0.0f && floatArduinoData > lastFloatArduinoData){
+                            turningpoint.Add(lastFloatArduinoData);
+                            break;
+                        }
+                            
+                }*/
+        //if (floatArduinoData > 0 && floatArduinoData > lastFloatArduinoData){
+        //    direction = "left";
+
+        if (floatArduinoData > 0 && floatArduinoData < lastFloatArduinoData){
+            direction = "leftTurnRight";
+        } else if (floatArduinoData < 0 && floatArduinoData > lastFloatArduinoData){
+            direction = "rightTurnLeft";
+        } 
+
+    void getMax()
+    {
+        lastLeftMax = -10000;
+        if(lastLeftMax < floatArduinoData){
+            lastLeftMax = floatArduinoData;
         }
+    }
+    void getMin()
+    {
+        lastRightMin = 10000;
+        if(lastRightMin > floatArduinoData){
+            lastRightMin = floatArduinoData;
+        }
+    }
+
+        if ( tempdirection != direction){
+            if (direction == "leftTurnRight"){
+                tempdirection = direction;
+                getMax(); 
+            } else if( direction =="rightTurnLeft"){
+                tempdirection = direction;
+                getMin();
+            }
+        }
+        Debug.Log(lastLeftMax);
+        Debug.Log(lastRightMin); 
+        /*} else if (floatArduinoData > 0 && floatArduinoData < lastFloatArduinoData){
+            direction = "lefttoright";
+        } else if (floatArduinoData < 0 && floatArduinoData < lastFloatArduinoData){
+            direction = "right";
+        } else if (floatArduinoData < 0 && floatArduinoData > lastFloatArduinoData){
+            direction = "righttoleft";
+        }*/
+
+       /* if (direction == "lefttoright" && lastLeftMax < floatArduinoData){
+            lastLeftMax= floatArduinoData;
+            if (direction == "lefttoright" && lastLeftMax > floatArduinoData){
+                LeftMax = lastLeftMax;
+            }
+            Debug.Log(LeftMax);
+        }
+        
+
+         if (direction == "righttoleft" && lastRightMin > floatArduinoData){
+            lastRightMin = floatArduinoData;
+            if (direction == "righttoleft" && lastRightMin < floatArduinoData){
+                RightMin = lastRightMin;
+            }
+            Debug.Log(RightMin);
+        }*/
+        
+        /*if (floatArduinoData < 0 && floatArduinoData > lastFloatArduinoData && direction == "right"){
+            return lastFloatArduinoData;
+            
+        } */
+        /*while (floatArduinoData > 0 && floatArduinoData < lastFloatArduinoData){
+          
+            turningpoint.Add(lastFloatArduinoData);
+    
+            break;
+        }*/
+        /*if (direction =="lefttoright"){
+            Debug.Log(floatArduinoData);
+        }*/
+        //Debug.Log(turningpoint);
+
+        
         lastFloatArduinoData = floatArduinoData;
     }
+    
     public void Die(){
         alive = false;
 
         if (!alive)
         {
             int s = GameManager.inst.scoreReturn();
-            Debug.Log(s);
+            //Debug.Log(s);
             StartCoroutine(UploadCoinsData(s, "user01"));
             OpenWindow("Restart or End");
         }
@@ -170,6 +284,7 @@ public class PlayerMovement : MonoBehaviour
     {
         leftCount += 1;
     }
+    
 
     void Restart(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -201,6 +316,15 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(1);
         uiObject2.SetActive(false);
         //elf.SetActive(false);
+    }
+
+    IEnumerator WaitForSec3()
+    {
+        yield return new WaitForSeconds(1);
+        uiObject3.SetActive(true);
+        yield return new WaitForSeconds(1);
+        uiObject3.SetActive(false);
+        
     }
 
     /*test window*/

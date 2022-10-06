@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    
     [SerializeField] float turnSpeed = 90f;
     private void OnTriggerEnter (Collider other){
         if(other.gameObject.GetComponent<Obstacle>()!=null){

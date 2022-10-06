@@ -14,8 +14,8 @@ TagManager:
   - Ground
   - SolidObjects2
   - SolidObjects
-  - 
-  - 
+  - body
+  - cloth
   - 
   - 
   - 
@@ -52,4 +52,10 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 510297181
+    locked: 0
+  - name: body
+    uniqueID: 1583552803
+    locked: 0
+  - name: pants
+    uniqueID: 2838867363
     locked: 0

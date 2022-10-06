@@ -4,7 +4,10 @@ using UnityEngine;
 using XCharts;
 using XCharts.Runtime;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 using TMPro;
+using System;
+using Random = UnityEngine.Random;
 
 public class XChartsTest : MonoBehaviour
 {
@@ -16,7 +19,13 @@ public class XChartsTest : MonoBehaviour
     public Button buttonForMove;
     int countClickMoveButtonTimes;
 
+    /*connect to mySQL*/
+    public static XChartsTest Instance;
+    public webChart webChart;
+    
 
+    
+    
     void Start()
     {
         //the number of coins patient get
@@ -34,6 +43,16 @@ public class XChartsTest : MonoBehaviour
             //{
 
             //}*/
+
+
+        /*connect to mySQL*/
+        Instance = this;
+        webChart = GetComponent<webChart>();
+        
+        //string[] s;
+       // StartCoroutine(GetCoinsData("http://localhost/unityPatronus/getChartDataFromMySQL.php"));
+
+        //Debug.Log(chartInfo_temp.coinDB.Count);
     }
 
     void Update()
@@ -47,19 +66,26 @@ public class XChartsTest : MonoBehaviour
         else if(countClickCoinButtonTimes == 2)
         {
             countClickCoinButtonTimes = 0;
-            createChart(10, 20, "the number of coins every time when you play the game");
+            //createChart(10, 20, "the number of coins every time when you play the game");
+            StartCoroutine(GetCoinsData("http://localhost/unityPatronus/getChartDataFromMySQL.php"));
         }
 
         if (countClickMoveButtonTimes == 1)
         {//click button one time
             //Debug.Log(countClickMoveButtonTimes);
-            //createChart(40, 50, "the number of moving every time when you play the game");
+            List<int> coinMoveInt = new List<int>();
+            for(int i = 0; i < 10; i++)
+            {
+                coinMoveInt.Add(Random.Range(40, 50));
+            }
+            
+            createChart(40, 50, "the number of moving every time when you play the game", coinMoveInt);
 
         }
         else if (countClickMoveButtonTimes == 2)
         {
             countClickMoveButtonTimes = 0;
-            createChart(40, 50, "the number of moving every time when you play the game");
+            //createChart(40, 50, "the number of moving every time when you play the game");
         }
 
 
@@ -78,7 +104,7 @@ public class XChartsTest : MonoBehaviour
         Debug.Log(countClickMoveButtonTimes);
     }
 
-    public void createChart(int num1, int num2, string s)
+    public void createChart(int num1, int num2, string s, List<int> coinDataInt)
     {
         //buttonForCoin.gameObject.SetActive(false);//hide button
 
@@ -106,7 +132,7 @@ public class XChartsTest : MonoBehaviour
 
         //setup axis
         var xAxis = chart.GetOrAddChartComponent<XAxis>();
-        xAxis.splitNumber = 5;//expected splitNumbers
+        xAxis.splitNumber = coinDataInt.Count;//expected splitNumbers
         xAxis.boundaryGap = true;// edge of axis is blank or not
         xAxis.type = Axis.AxisType.Category;// type of axis: Value、Category、Log、Time
 
@@ -116,8 +142,8 @@ public class XChartsTest : MonoBehaviour
         chart.RemoveData();
         //chart.ClearData();
         chart.AddSerie<Line>("line");
-
-        for (int i = 1; i <= 5; i++)
+       
+        for (int i = 1; i <= coinDataInt.Count; i++)
         {
             if (i == 1)
             {
@@ -135,11 +161,75 @@ public class XChartsTest : MonoBehaviour
             {
                 chart.AddXAxisData(i + "th game");
             }
+            //chart.AddData(0, Random.Range(num1, num2));
 
-            chart.AddData(0, Random.Range(num1, num2));
+            
+            /*test array*/
+            for (int j = coinDataInt.Count - 1; j >= 0; j--)
+            {
+                if(i + j == coinDataInt.Count)
+                {
+                    chart.AddData(0, coinDataInt[j]);
+                }
+                
+            }
+
         }
     }
-    
 
-   
+    //getData
+    IEnumerator GetCoinsData(string uri)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            string[] coinData;
+            List<int> coinDataInt = new List<int>();
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(pages[page] + ": Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError(pages[page] + ": HTTP Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+
+                    /*        for (int i = 0; i < webRequest.downloadHandler.text.Length; i++)
+                            {
+                                //Debug.Log(webRequest.downloadHandler.text[i]);
+                            }*/
+
+                   
+                    int x = 0;
+                    coinData = webRequest.downloadHandler.text.Split("<br>");
+                    //Debug.Log("ttttttttttttttttttttt" + coinData.Length.ToString());
+                    for (int i = 0, j = 0; i < coinData.Length; i++, j++)
+                    {
+                        Debug.Log(i);
+                        Debug.Log(coinData[i]);
+                        if (coinData[i] != "" && coinData[i] != "Connected successfully")
+                        {
+                            //Debug.Log(i);
+                            //Debug.Log(coinData[i]);
+                            //list.Add(coinData[i]);
+                            Int32.TryParse(coinData[i], out x);
+                            coinDataInt.Add(x);
+                            
+                        }
+
+                    }
+
+                    createChart(10, 20, "the number of coins every time when you play the game", coinDataInt);
+                    break;
+            }
+        }
+    }
 }
