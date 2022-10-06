@@ -114,17 +114,17 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator WaitForSec3()
     {
-        yield return new WaitForSeconds(43);
+        yield return new WaitForSeconds(25);
         uiObject3.SetActive(true);
-        yield return new WaitForSeconds(45);
+        yield return new WaitForSeconds(27);
         uiObject3.SetActive(false);
     }
 
     IEnumerator WaitForSec4()
     {
-        yield return new WaitForSeconds(48);
+        yield return new WaitForSeconds(30);
         uiObject4.SetActive(true);
-        yield return new WaitForSeconds(52);
+        yield return new WaitForSeconds(33);
         uiObject4.SetActive(false);
     }
 
@@ -154,7 +154,7 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator WaitForSec7()
     {
-        yield return new WaitForSeconds(40);
+        yield return new WaitForSeconds(20);
         string beginningData = myport.ReadLine();
         float floatBeginningData = float.Parse(beginningData);
         //Debug.Log(floatBeginningData);
