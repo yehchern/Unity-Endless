@@ -9,7 +9,7 @@ using System;
 public class SceneLoader : MonoBehaviour
 {
     SerialPort myport = new SerialPort("COM5", 9600);
-    SerialPort boneport = new SerialPort("COM7", 9600);
+    //SerialPort boneport = new SerialPort("COM7", 9600);
     public string beginningData;
     public float floatBeginningData;
     public static float datatemp;
@@ -27,104 +27,100 @@ public class SceneLoader : MonoBehaviour
     public GameObject uiObject3;
     public GameObject uiObject4;
     public GameObject uiObject5;
-    public GameObject uiObject6;
-    public GameObject uiObject7;
+    //public GameObject uiObject6;
+    //public GameObject uiObject7;
 
     void Start()
     {
-        StartCoroutine("WaitForSec6");
-        /*myport.BaudRate = 9600;
+        //StartCoroutine("WaitForSec6");
+        myport.BaudRate = 9600;
         myport.PortName = "COM5";
         myport.Open();
-        boneport.BaudRate = 9600;
-        boneport.PortName = "COM7";
-        boneport.Open();*/
+        //boneport.BaudRate = 9600;
+        //boneport.PortName = "COM7";
+        //boneport.Open();
         //uiObject3.SetActive(false);
         //uiObject4.SetActive(false);
         //uiObject5.SetActive(false);
-       
+        StartCoroutine("WaitForSec3");
+        StartCoroutine("WaitForSec4");
+
     }
 
     void Update()
     {
-        StartCoroutine("WaitForSec7");
-        StartCoroutine("WaitForSec3");
-        StartCoroutine("WaitForSec4");
-    }
-        /*string beginningData = myport.ReadLine();
+        //StartCoroutine("WaitForSec7");
+        //StartCoroutine("WaitForSec3");
+        //StartCoroutine("WaitForSec4");
+        string beginningData = myport.ReadLine();
         float floatBeginningData = float.Parse(beginningData);
         //Debug.Log(floatBeginningData);
         if (floatBeginningData < 0)
         {
             stateChange = -1;
-            
-            if(floatBeginningData < minData){
-            minData = floatBeginningData;
-            Debug.Log(minData);
-        }
+
+            if (floatBeginningData < minData)
+            {
+                minData = floatBeginningData;
+                Debug.Log(minData);
+            }
             //RightMovement.Add(floatBeginningData);
         }
         else
         {
             stateChange = 1;
-           // LeftMovement.Add(floatBeginningData);
-            if(floatBeginningData > maxData){
-            maxData = floatBeginningData;
-            Debug.Log(maxData);
+            // LeftMovement.Add(floatBeginningData);
+            if (floatBeginningData > maxData)
+            {
+                maxData = floatBeginningData;
+                Debug.Log(maxData);
+            }
         }
-        }
-        
-        
+
+
         if (stateChangetemp != stateChange)
         {
             stateChangetemp = stateChange;
             changeFunction();
         }
-        
-        if (leftCount > 6)
+
+        if (leftCount > 3)
         {
             StartCoroutine("WaitForSec5");
         }
-    }
 
-    
-    
-    public void changeFunction()
-    {
-        leftCount += 1;
-    }
-    
 
-    /*public void minChoose()
-    {
-        minTemp = 0;
-        if (floatBeginningData < minTemp){
-            minTemp = floatBeginningData;
+
+
+        void changeFunction()
+        {
+            leftCount += 1;
         }
+
+        if (datatemp != floatBeginningData)
+        {
+            datatemp = floatBeginningData;
+            datacount += 1;
+        }
+
+
+
         
+
     }
-
-    public void maxChoose()
-    {
-        maxTemp = 0;
-        if (floatBeginningData > maxTemp){
-            maxTemp = floatBeginningData;
-        }
-    }*/
-
     IEnumerator WaitForSec3()
     {
-        yield return new WaitForSeconds(25);
+        yield return new WaitForSeconds(1);
         uiObject3.SetActive(true);
-        yield return new WaitForSeconds(27);
+        yield return new WaitForSeconds(3);
         uiObject3.SetActive(false);
     }
 
     IEnumerator WaitForSec4()
     {
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(6);
         uiObject4.SetActive(true);
-        yield return new WaitForSeconds(33);
+        yield return new WaitForSeconds(3);
         uiObject4.SetActive(false);
     }
 
@@ -132,93 +128,23 @@ public class SceneLoader : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         uiObject5.SetActive(true);
-        yield return new WaitForSeconds(7);
+        yield return new WaitForSeconds(6);
         uiObject5.SetActive(false);
         SceneManager.LoadScene(2);
     }
-     IEnumerator WaitForSec6()
-    {
-        uiObject6.SetActive(true);
-        yield return new WaitForSeconds(3);
-        uiObject6.SetActive(false);
-        uiObject7.SetActive(true);
-        yield return new WaitForSeconds(15);
-        uiObject7.SetActive(false);
-        myport.BaudRate = 9600;
-        myport.PortName = "COM5";
-        myport.Open();
-        boneport.BaudRate = 9600;
-        boneport.PortName = "COM7";
-        boneport.Open();
-    }
-
-    IEnumerator WaitForSec7()
-    {
-        yield return new WaitForSeconds(20);
-        string beginningData = myport.ReadLine();
-        float floatBeginningData = float.Parse(beginningData);
-        //Debug.Log(floatBeginningData);
-        if (floatBeginningData < 0)
-        {
-            stateChange = -1;
-            
-            if(floatBeginningData < minData){
-            minData = floatBeginningData;
-            Debug.Log(minData);
-        }
-            //RightMovement.Add(floatBeginningData);
-        }
-        else
-        {
-            stateChange = 1;
-           // LeftMovement.Add(floatBeginningData);
-            if(floatBeginningData > maxData){
-            maxData = floatBeginningData;
-            Debug.Log(maxData);
-        }
-        }
-        
-        
-        if (stateChangetemp != stateChange)
-        {
-            stateChangetemp = stateChange;
-            changeFunction();
-        }
-        
-        if (leftCount > 6)
-        {
-            StartCoroutine("WaitForSec5");
-        }
-    
-
-    
-    
-    void changeFunction()
-    {
-        leftCount += 1;
-    }
-
-    if (datatemp != floatBeginningData){
-        datatemp = floatBeginningData;
-        datacount += 1;
-    }
-    
-
-    /*public void minChoose()
-    {
-        minTemp = 0;
-        if (floatBeginningData < minTemp){
-            minTemp = floatBeginningData;
-        }
-        
-    }
-
-    public void maxChoose()
-    {
-        maxTemp = 0;
-        if (floatBeginningData > maxTemp){
-            maxTemp = floatBeginningData;
-        }
-    }*/
-    }
 }
+
+    
+        
+
+    
+    
+
+  
+
+    
+    
+    
+    
+
+

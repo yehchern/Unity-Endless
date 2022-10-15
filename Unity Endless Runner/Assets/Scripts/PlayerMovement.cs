@@ -16,23 +16,23 @@ public class PlayerMovement : MonoBehaviour
     //Debug.Log(SceneLoader.minData);
     
     SerialPort sp = new SerialPort("COM5", 9600);
-    SerialPort backport = new SerialPort("COM7", 9600);
+    //SerialPort backport = new SerialPort("COM7", 9600);
     bool alive = true;
     public GameObject uiObject;
     public GameObject uiObject2;
-    public GameObject uiObject3;
+    //public GameObject uiObject3;
     
 
     public GameObject elf;
     public float speed = 8;
-    public int value;
+    //public int value;
     [SerializeField] Rigidbody rb;
 
     //turning point
-    public string direction;
-    public string tempdirection;
-    float lastLeftMax;
-    float lastRightMin;
+    //public string direction;
+    //public string tempdirection;
+    //float lastLeftMax;
+    //float lastRightMin;
     
 
     float lastFloatArduinoData = 0f;
@@ -45,11 +45,11 @@ public class PlayerMovement : MonoBehaviour
 
 
     //////////////////////////////////////////
-    public float leftRightSpeed = 2;
+    public float leftRightSpeed = 4;
 
     //fairy
-    //public float max = 10;
-    //public float min = -10;
+    public float max = 10;
+    public float min = -10;
 
 
     /*Exit or start window*/
@@ -65,16 +65,18 @@ public class PlayerMovement : MonoBehaviour
     {
         uiObject.SetActive(false);
         uiObject2.SetActive(false);
+        //uiObject3.SetActive(false);
         //elf.SetActive(false);
         //sp.Open();
         //sp.ReadTimeout = 1;
-        
+
         sp.BaudRate = 9600;
         sp.PortName = "COM5";
         sp.Open();
-        backport.BaudRate = 9600;
-        backport.PortName = "COM7";
-        backport.Open();
+        //backport.BaudRate = 9600;
+        //backport.PortName = "COM7";
+        //backport.Open();
+        //Debug.Log(SceneLoader.minData);
 
     }
 
@@ -82,8 +84,8 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate(){
         if(!alive) return;
         //Vector3 forwardMove = transform.forward * speed * Time.fixedDeltaTime; 
-        //Vector3 horizontalMove = transform.right * horizontalInput*speed*Time.fixedDeltaTime*horizontalMultiplier;
-        //rb.MovePosition(rb.position + forwardMove);//+ horizontalMove
+        //Vector3 horizontalMove = transform.right * horizontalInput/50*speed*Time.fixedDeltaTime*horizontalMultiplier;
+        //rb.MovePosition(rb.position + forwardMove+ horizontalMove);//+ horizontalMove
         //transform.Translate(Vector3.forward * Time.deltaTime * speed);
     } /**/
 
@@ -96,15 +98,24 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log(arduinoData);
 
         float floatArduinoData = float.Parse(arduinoData);
-        transform.Translate(Vector3.forward * Time.fixedDeltaTime * 3);
+        //horizontalInput = floatArduinoData;
+        /*if (floatArduinoData > 0)
+        {
+            transform.Translate(Vector3.left * Time.deltaTime * 5);
+        }
+        if (floatArduinoData < 0)
+        {
+            transform.Translate(Vector3.right * Time.deltaTime * 5);
+        }*/
+        transform.Translate(Vector3.forward * Time.fixedDeltaTime * 2);
 
         //back
-        string backData = backport.ReadLine();
-        float floatbackData = float.Parse(backData);
+        //string backData = backport.ReadLine();
+        //float floatbackData = float.Parse(backData);
 
 
         //if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        if (floatArduinoData > lastFloatArduinoData && ((floatArduinoData - lastFloatArduinoData) > 0.02f))//right
+        if (floatArduinoData > lastFloatArduinoData && ((floatArduinoData - lastFloatArduinoData) > 0.05f))//right
         {
             if(this.gameObject.transform.position.x > -4f)
             {
@@ -112,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        if (floatArduinoData <= lastFloatArduinoData && ((lastFloatArduinoData - floatArduinoData) > 0.02f))//left   
+        if (floatArduinoData <= lastFloatArduinoData && ((lastFloatArduinoData - floatArduinoData) > 0.05f))//left   
         {
             if (this.gameObject.transform.position.x < 4f)
             {
@@ -153,11 +164,11 @@ public class PlayerMovement : MonoBehaviour
 
         //back
 
-        if(floatbackData > 25 ||floatbackData < -25){
-             StartCoroutine("WaitForSec3");
-        }
+        //if(floatbackData > 10 ||floatbackData < -10){
+             //StartCoroutine("WaitForSec3");
+        //}
         //hint from elf
-        /*if (max >= lastFloatArduinoData && lastFloatArduinoData > 0.0f && lastFloatArduinoData > floatArduinoData + 0.2f)
+        if (max >= lastFloatArduinoData && lastFloatArduinoData > 0.0f && lastFloatArduinoData > floatArduinoData + 0.2f)
         {
         
             StartCoroutine("WaitForSec");
@@ -169,26 +180,11 @@ public class PlayerMovement : MonoBehaviour
             
             StartCoroutine("WaitForSec2");
             
-        }*/
-        /*switch (value)
-                {
-                    case 1:
-                        if (floatArduinoData > 0.0f && floatArduinoData < lastFloatArduinoData){
-                            turningpoint.Add(lastFloatArduinoData);
-                            break;
-                        }
-                            
-                    case 2:
-                        if (floatArduinoData < 0.0f && floatArduinoData > lastFloatArduinoData){
-                            turningpoint.Add(lastFloatArduinoData);
-                            break;
-                        }
-                            
-                }*/
-        //if (floatArduinoData > 0 && floatArduinoData > lastFloatArduinoData){
-        //    direction = "left";
+        }
+        
+  
 
-    if (floatArduinoData > 0 && floatArduinoData < lastFloatArduinoData)
+    /*if (floatArduinoData > 0 && floatArduinoData < lastFloatArduinoData)
     {
         direction = "leftTurnRight";
         } else if (floatArduinoData < 0 && floatArduinoData > lastFloatArduinoData){
@@ -218,19 +214,19 @@ public class PlayerMovement : MonoBehaviour
                 tempdirection = direction;
                 getMin();
             }
-        }
-        Debug.Log(lastLeftMax);
-        Debug.Log(lastRightMin); 
+        }*/
+
+        //Debug.Log(lastRightMin); 
 
         //hint from elf
-        if (lastLeftMax - (SceneLoader.maxData - SceneLoader.datatemp) > 20.0f)
+        /*if (lastLeftMax - (SceneLoader.maxData - SceneLoader.datatemp) > 20.0f)
         {
             StartCoroutine("WaitForSec");
         }
         if(lastRightMin - (SceneLoader.minData - SceneLoader.datatemp) > -20.0f)
         {
             StartCoroutine("WaitForSec2");
-        }
+        }*/
         /*} else if (floatArduinoData > 0 && floatArduinoData < lastFloatArduinoData){
             direction = "lefttoright";
         } else if (floatArduinoData < 0 && floatArduinoData < lastFloatArduinoData){
@@ -239,23 +235,23 @@ public class PlayerMovement : MonoBehaviour
             direction = "righttoleft";
         }*/
 
-       /* if (direction == "lefttoright" && lastLeftMax < floatArduinoData){
-            lastLeftMax= floatArduinoData;
-            if (direction == "lefttoright" && lastLeftMax > floatArduinoData){
-                LeftMax = lastLeftMax;
-            }
-            Debug.Log(LeftMax);
-        }
-        
+        /* if (direction == "lefttoright" && lastLeftMax < floatArduinoData){
+             lastLeftMax= floatArduinoData;
+             if (direction == "lefttoright" && lastLeftMax > floatArduinoData){
+                 LeftMax = lastLeftMax;
+             }
+             Debug.Log(LeftMax);
+         }
 
-         if (direction == "righttoleft" && lastRightMin > floatArduinoData){
-            lastRightMin = floatArduinoData;
-            if (direction == "righttoleft" && lastRightMin < floatArduinoData){
-                RightMin = lastRightMin;
-            }
-            Debug.Log(RightMin);
-        }*/
-        
+
+          if (direction == "righttoleft" && lastRightMin > floatArduinoData){
+             lastRightMin = floatArduinoData;
+             if (direction == "righttoleft" && lastRightMin < floatArduinoData){
+                 RightMin = lastRightMin;
+             }
+             Debug.Log(RightMin);
+         }*/
+
         /*if (floatArduinoData < 0 && floatArduinoData > lastFloatArduinoData && direction == "right"){
             return lastFloatArduinoData;
             
@@ -273,6 +269,7 @@ public class PlayerMovement : MonoBehaviour
 
         
         lastFloatArduinoData = floatArduinoData;
+        //Debug.Log(lastLeftMax);
     }
     
     
@@ -330,14 +327,14 @@ public class PlayerMovement : MonoBehaviour
         //elf.SetActive(false);
     }
 
-    IEnumerator WaitForSec3()
+    /*IEnumerator WaitForSec3()
     {
         yield return new WaitForSeconds(1);
         uiObject3.SetActive(true);
         yield return new WaitForSeconds(1);
         uiObject3.SetActive(false);
         
-    }
+    }*/
 
     /*test window*/
     private void OpenWindow(string message)
